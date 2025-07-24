@@ -1,0 +1,17 @@
+### GET request to example server
+GET http://localhost:8080
+
+###
+GET http://localhost:8080/api/v1/wallet
+
+###
+GET http://localhost:8080/api/v1/wallet/3
+
+###
+POST http://localhost:8080/api/v1/wallet
+Content-Type: application/json
+
+{
+  "username": "May",
+  "balance": "250"
+}

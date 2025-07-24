@@ -1,0 +1,33 @@
+services:
+  db:
+    container_name: postgres
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: william
+      POSTGRES_PASSWORD: password
+      PGDATA: /data/postgres
+    # Mounts a named volume called db to /data/postgres inside the db container.
+    # Keeps database data persistent. Defined in later section under "volume"
+    volumes:
+      - db:/data/postgres
+    # Exposes container through port 5332. Host can connect to the container through
+    # this port
+    ports:
+      - "5332:5432"
+    # Connects the service to a custom bridge network called "db". Defined
+    # later under "networks". Any service connected to "db" network can
+    # communicate with each other via name only. e.g. "db:5432".
+    networks:
+      - db
+    restart: unless-stopped
+
+# Defines a bridge network, allows any service defined within the network
+# to communicate with each other via name only. e.g. db:5432
+# Host cannot access this network, can only access through exposed port. e.g. localhost:5332
+networks:
+  db:
+    driver: bridge
+
+# Defines a named volume called db
+volumes:
+  db:
